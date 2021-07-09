@@ -1,4 +1,5 @@
 import axios from "axios";
+
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -59,13 +60,12 @@ const Card = (article) => {
   //
 
   const cardAppender = (selector) => {
-    const cont = document.querySelector(selector);
-    axios
-      .get("http://localhost:5000/api/articles")
+    const place = document.querySelector(selector);
+    axios.get("http://localhost:5000/api/articles")
       .then(response => {
         const articles = response.data.articles;
-        for(const topic in articles){            // for in loop
-          articles[topic].forEach(i => cont.appendChild(Card(i)))
+        for(const group in articles){            // for in loop
+          articles[group].forEach(entry => place.appendChild(Card(entry)))
         }
           })
       .catch(error => console.log(error))
