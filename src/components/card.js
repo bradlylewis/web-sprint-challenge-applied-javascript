@@ -1,4 +1,4 @@
-
+import axios from "axios";
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -49,8 +49,7 @@ const Card = (article) => {
   return card;
 }
 
-const cardAppender = (selector) => {
-  // TASK 6
+ // TASK 6
   // ---------------------
   // Implement this function that takes a css selector as its only argument.
   // It should obtain articles from this endpoint: `http://localhost:5000/api/articles` (test it in Postman/HTTPie!).
@@ -58,13 +57,18 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
-  const place = document.querySelector(selector) // where we are appending our tabs
 
-  axios.get(`http://localhost:5000/api/topics`)
-  .then(response => {
-    console.log(response.data)
-    place.appendChild(Tabs(response.data.topics)) // topics is a key in the object holding the array
-  });
-}
+  const cardAppender = (selector) => {
+    const cont = document.querySelector(selector);
+    axios
+      .get("http://localhost:5000/api/articles")
+      .then(response => {
+        const articles = response.data.articles;
+        for(const topic in articles){            // for in loop
+          articles[topic].forEach(i => cont.appendChild(Card(i)))
+        }
+          })
+      .catch(error => console.log(error))
+  }
 
 export { Card, cardAppender }
