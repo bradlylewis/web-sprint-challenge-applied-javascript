@@ -1,4 +1,4 @@
-const Card = (article) => {
+
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -16,7 +16,8 @@ const Card = (article) => {
   //     <span>By { authorName }</span>
   //   </div>
   // </div>
-  
+
+const Card = (article) => {
   // creating our selectors
   const card = document.createElement('div')
   const headline = document.createElement('div')
@@ -44,9 +45,7 @@ const Card = (article) => {
   img.setAttribute('src', `${article.authorPhoto}`);
 
   // adding a lister for clicks
-  card.addEventListener('click', (event) =>{
-    console.log(headline);
-  })
+  card.addEventListener('click', () => console.log(headline))
   return card;
 }
 
@@ -59,6 +58,13 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+  const place = document.querySelector(selector) // where we are appending our tabs
+
+  axios.get(`http://localhost:5000/api/topics`)
+  .then(response => {
+    console.log(response.data)
+    place.appendChild(Tabs(response.data.topics)) // topics is a key in the object holding the array
+  });
 }
 
 export { Card, cardAppender }
